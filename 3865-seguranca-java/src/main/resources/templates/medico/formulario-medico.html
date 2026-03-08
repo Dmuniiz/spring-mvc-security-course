@@ -58,6 +58,10 @@
                             <img src="/static/assets/back.png" th:src="@{/assets/back.png}" alt="Voltar" class="btn-icon">Voltar
                         </a>
                     </div>
+
+                    <input type="hidden" name="id" th:field="*{id}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
                 </form>
             </section>
         </main>
