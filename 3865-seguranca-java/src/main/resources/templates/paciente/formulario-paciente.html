@@ -36,7 +36,7 @@
 
                 <div class="form-group">
                     <label for="cpf">CPF:</label>
-                    <input id="cpf" name="crm" th:field="*{cpf}" required>
+                    <input id="cpf" maxlength="11" name="crm" th:field="*{cpf}" required>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
                 </div>
 

@@ -14,8 +14,13 @@
                         </li>
 
                         <li sec:authorize="hasRole('ATENDENTE')">
+                            <a href="../paciente/listagem-pacientes.html" th:href="@{/pacientes}">Pacientes</a>
+                        </li>
+
+                        <li sec:authorize="!hasRole('PACIENTE')">
                             <a href="../consulta/listagem-consultas.html" th:href="@{/consultas}">Consultas</a>
                         </li>
+
                     </ul>
                 </li>
             </ul>

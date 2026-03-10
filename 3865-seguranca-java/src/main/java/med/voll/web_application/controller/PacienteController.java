@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class PacienteController {
 
     private static final String PAGINA_LISTAGEM = "paciente/listagem-pacientes";
-    private static final String PAGINA_CADASTRO = "paciente/formulario-pacientes";
+    private static final String PAGINA_CADASTRO = "paciente/formulario-paciente";
     private static final String REDIRECT_LISTAGEM = "redirect:/pacientes?sucesso";
 
     private final PacienteService service;

@@ -2,9 +2,9 @@ package med.voll.web_application.domain.pacientes;
 
 import med.voll.web_application.domain.medico.Especialidade;
 
-public record DadosListagemPaciente(String nome, String email, String cpf) {
+public record DadosListagemPaciente(Long id, String nome, String email, String telefone, String cpf) {
 
     public DadosListagemPaciente(Paciente paciente) {
-        this(paciente.getNome(), paciente.getEmail(), paciente.getSenhaCPF());
+        this(paciente.getId(), paciente.getNome(), paciente.getEmail(), paciente.getTelefone(), paciente.getSenhaCPF());
     }
 }

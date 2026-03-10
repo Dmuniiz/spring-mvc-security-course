@@ -22,7 +22,7 @@ public class PacienteService {
     @Transactional
     public void cadastrar(DadosCadastroPaciente dados) {
         if (repository.isJaCadastrado(dados.email(), dados.cpf(), dados.id())) {
-            throw new RegraDeNegocioException("E-mail ou CRM já cadastrado para outro Paciente!");
+            throw new RegraDeNegocioException("E-mail ou CPF já cadastrado para outro Paciente!");
         }
 
         if (dados.id() == null) {
