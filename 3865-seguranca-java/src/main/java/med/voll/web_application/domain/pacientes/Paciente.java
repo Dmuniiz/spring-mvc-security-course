@@ -1,9 +1,8 @@
 package med.voll.web_application.domain.pacientes;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import med.voll.web_application.domain.medico.DadosCadastroMedico;
+import med.voll.web_application.domain.perfil.Perfil;
 
 @Entity
 @Table(name = "pacientes")

@@ -2,6 +2,7 @@ package med.voll.web_application.domain.consulta;
 
 import jakarta.persistence.*;
 import med.voll.web_application.domain.medico.Medico;
+import med.voll.web_application.domain.pacientes.Paciente;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +13,13 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medico_id")
     private Medico medico;
 
     private LocalDateTime data;
@@ -22,13 +27,13 @@ public class Consulta {
     @Deprecated
     public Consulta(){}
 
-    public Consulta(Medico medico, DadosAgendamentoConsulta dados) {
-        modificarDados(medico, dados);
+    public Consulta(Medico medico, Paciente paciente, DadosAgendamentoConsulta dados) {
+        modificarDados(medico, paciente, dados);
     }
 
-    public void modificarDados(Medico medico, DadosAgendamentoConsulta dados) {
+    public void modificarDados(Medico medico, Paciente paciente, DadosAgendamentoConsulta dados) {
         this.medico = medico;
-        this.paciente = dados.paciente();
+        this.paciente = paciente;
         this.data = dados.data();
     }
 
@@ -36,7 +41,7 @@ public class Consulta {
         return id;
     }
 
-    public String getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
 

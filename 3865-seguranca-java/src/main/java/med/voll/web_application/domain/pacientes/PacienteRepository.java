@@ -3,6 +3,8 @@ package med.voll.web_application.domain.pacientes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     @Query("""
@@ -14,4 +16,5 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
             """)
     boolean isJaCadastrado(String email, String cpf, Long id);
 
+    Optional<Paciente> findByCpf(String cpf);
 }

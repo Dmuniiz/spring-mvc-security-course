@@ -2,7 +2,9 @@ package med.voll.web_application.infra.exception.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -27,6 +30,9 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/").permitAll())
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/css/**", "/js/**", "/assets/**").permitAll();
+                    req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
+                    req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
+                    req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
                     req.anyRequest().authenticated();
                 })
                 .logout((logout) -> logout

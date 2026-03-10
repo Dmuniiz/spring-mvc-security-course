@@ -1,5 +1,6 @@
 package med.voll.web_application.domain.usuario;
 
+import med.voll.web_application.domain.perfil.Perfil;
 import org.apache.catalina.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,9 +24,9 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
     }
 
-    public Long saveUser(String nome, String email, String senha) {
+    public Long saveUser(String nome, String email, String senha, Perfil perfil) {
         String passwordEncoded = encoder.encode(senha);
-        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded));
+        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded, perfil));
         usuarioRepository.save(usuario);
 
         return usuario.getId();

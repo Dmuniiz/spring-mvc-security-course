@@ -1,0 +1,4 @@
+CREATE TYPE perfil AS ENUM ('ATENDENTE', 'MEDICO', 'PACIENTE');
+
+ALTER TABLE usuarios
+ADD COLUMN perfil perfil NOT NULL;
