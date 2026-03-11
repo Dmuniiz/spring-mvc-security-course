@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -25,9 +27,13 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
     }
 
-    public Long saveUser(String nome, String email, String senha, Perfil perfil) {
-        String passwordEncoded = encoder.encode(senha);
+    public Long saveUser(String nome, String email, Perfil perfil) {
+        String primeiroAcessoSenha = UUID.randomUUID().toString().substring(0, 8);
+
+        String passwordEncoded = encoder.encode(primeiroAcessoSenha);
+
         Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded, perfil));
+
         usuarioRepository.save(usuario);
 
         return usuario.getId();

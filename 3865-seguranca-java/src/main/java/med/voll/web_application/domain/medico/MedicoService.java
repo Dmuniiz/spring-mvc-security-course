@@ -33,7 +33,7 @@ public class MedicoService {
         }
 
         if (dados.id() == null) {
-            Long userId = usuarioService.saveUser(dados.nome(), dados.email(), dados.crm(), Perfil.MEDICO);
+            Long userId = usuarioService.saveUser(dados.nome(), dados.email(), Perfil.MEDICO);
             repository.save(new Medico(userId, dados));
         } else {
             var medico = repository.findById(dados.id()).orElseThrow();

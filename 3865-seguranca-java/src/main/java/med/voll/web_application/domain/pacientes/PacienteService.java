@@ -26,7 +26,7 @@ public class PacienteService {
         }
 
         if (dados.id() == null) {
-            Long userId = usuarioService.saveUser(dados.nome(), dados.email(), dados.cpf(), Perfil.PACIENTE);
+            Long userId = usuarioService.saveUser(dados.nome(), dados.email(), Perfil.PACIENTE);
             repository.save(new Paciente(userId, dados));
         } else {
             var paciente = repository.findById(dados.id()).orElseThrow();
