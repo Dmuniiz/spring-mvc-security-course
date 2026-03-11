@@ -1,5 +1,6 @@
 package med.voll.web_application.domain.usuario;
 
+import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.perfil.Perfil;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -56,6 +58,16 @@ public class UsuarioService implements UserDetailsService {
         logado.alterarSenha(novaSenhaEncoded);
         logado.setSenhaAlterada(true);
         usuarioRepository.save(logado);
+    }
+
+    public void enviarToken(String email){
+        Usuario usuario = usuarioRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado com email: " + email));
+
+        String token = UUID.randomUUID().toString();
+        usuario.setToken(token);
+        usuario.setExpiracaoAuthToken(LocalDateTime.now().plusHours(1));
+
+        usuarioRepository.save(usuario);
     }
 
 }
