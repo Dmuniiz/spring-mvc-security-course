@@ -24,20 +24,21 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, OncePerRequestFilter FilterCustomPassword) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, OncePerRequestFilter filterCustomPassword) throws Exception {
         return http
-                .formLogin((form) ->
-                        form
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/").permitAll())
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/css/**", "/js/**", "/assets/**").permitAll();
+                    req.requestMatchers("/css/**", "/js/**", "/assets/**",
+                            "/", "/index", "/home").permitAll();
                     req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
                     req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
                     req.anyRequest().authenticated();
                 })
-                .addFilterBefore(FilterCustomPassword, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(filterCustomPassword, UsernamePasswordAuthenticationFilter.class)
+                .formLogin((form) ->
+                        form
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/").permitAll())
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
