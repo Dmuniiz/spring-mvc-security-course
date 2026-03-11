@@ -1,7 +1,7 @@
 package med.voll.web_application.domain.usuario;
 
 import med.voll.web_application.domain.perfil.Perfil;
-import org.apache.catalina.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,4 +36,20 @@ public class UsuarioService implements UserDetailsService {
     public void deleteUser(Long userId) {
         usuarioRepository.deleteById(userId);
     }
+
+    public void alterarSenha(DadosAlterarSenha dados, Usuario logado) {
+        if (!encoder.matches(dados.senhaAtual(), logado.getPassword())) {
+            throw new RuntimeException("Senha atual incorreta");
+        }
+
+        if (!dados.novaSenha().equals(dados.novaSenhaConfirmacao())) {
+            throw new RuntimeException("Nova senha e confirmação de senha não coincidem");
+        }
+
+        String novaSenhaEncoded = encoder.encode(dados.novaSenha());
+        logado.alterarSenha(novaSenhaEncoded);
+        logado.setSenhaAlterada(true);
+        usuarioRepository.save(logado);
+    }
+
 }

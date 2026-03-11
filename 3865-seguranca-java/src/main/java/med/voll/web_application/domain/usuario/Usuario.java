@@ -20,6 +20,7 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
+    private Boolean senhaAlterada;
 
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
@@ -29,6 +30,7 @@ public class Usuario implements UserDetails {
         this.email = email;
         this.senha = senha;
         this.perfil = perfil;
+        this.senhaAlterada = false;
     }
 
     public Usuario() {
@@ -61,4 +63,15 @@ public class Usuario implements UserDetails {
         return email;
     }
 
+    public void alterarSenha(String novaSenhaEncoded) {
+        this.senha = novaSenhaEncoded;
+    }
+
+    public Boolean getSenhaAlterada() {
+        return senhaAlterada;
+    }
+
+    public void setSenhaAlterada(Boolean senhaAlterada) {
+        this.senhaAlterada = senhaAlterada;
+    }
 }
