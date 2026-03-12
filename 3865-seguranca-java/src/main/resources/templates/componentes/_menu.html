@@ -17,21 +17,21 @@
                             <a href="../paciente/listagem-pacientes.html" th:href="@{/pacientes}">Pacientes</a>
                         </li>
 
-                        <li sec:authorize="!hasRole('PACIENTE')">
+                        <li>
                             <a href="../consulta/listagem-consultas.html" th:href="@{/consultas}">Consultas</a>
                         </li>
 
                     </ul>
                 </li>
             </ul>
-            <ul class="nav-right">
+            <ul  sec:authorize="isAuthenticated()" class="nav-right">
                 <li class="dropdown">
                     <a href="#">OLÁ, <span sec:authentication="principal.nome"></span> <i class="arrow-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li class="navbar-form">
-                            <a class="btn-link" href="#" th:href="@{/alterar-senha}" method="post">Alterar Senha</a>
-                        </li>
                         <li>
+                            <div class="navbar-form">
+                                <a class="btn-link" href="#" th:href="@{/alterar-senha}">Alterar senha</a>
+                            </div>
                             <form class="navbar-form" th:action="@{/logout}" method="post">
                                 <button class="btn-link">SAIR</button>
                             </form>
@@ -39,6 +39,9 @@
                     </ul>
                 </li>
             </ul>
+            <div class="navbar-form" sec:authorize="!isAuthenticated()">
+                <a class="btn-link" href="#" th:href="@{/login}">Login</a>
+            </div>
         </nav>
     </div>
 </header>

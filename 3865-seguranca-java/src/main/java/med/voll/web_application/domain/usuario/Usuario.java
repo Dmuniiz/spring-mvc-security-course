@@ -28,7 +28,7 @@ public class Usuario implements UserDetails {
     private Perfil perfil;
 
     private String token;
-    private LocalDateTime expiracaoAuthToken;
+    private LocalDateTime expiracaoToken;
 
     public Usuario(String nome, String email, String senha, Perfil perfil) {
         this.nome = nome;
@@ -84,7 +84,11 @@ public class Usuario implements UserDetails {
         this.token = token;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setExpiracaoAuthToken(LocalDateTime localDateTime) {
-        this.expiracaoAuthToken = localDateTime;
+        this.expiracaoToken = localDateTime;
     }
 }

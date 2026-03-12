@@ -2,6 +2,7 @@ package med.voll.web_application.domain.usuario;
 
 import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.perfil.Perfil;
+import med.voll.web_application.domain.usuario.email.EmailService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,10 +18,12 @@ public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
     private PasswordEncoder encoder;
+    private final EmailService emailService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encoder, EmailService emailService) {
         this.usuarioRepository = usuarioRepository;
         this.encoder = encoder;
+        this.emailService = emailService;
     }
 
     @Override
@@ -31,12 +34,12 @@ public class UsuarioService implements UserDetailsService {
 
     public Long saveUser(String nome, String email, Perfil perfil) {
         String primeiroAcessoSenha = UUID.randomUUID().toString().substring(0, 8);
-
         String passwordEncoded = encoder.encode(primeiroAcessoSenha);
-
         Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded, perfil));
 
         usuarioRepository.save(usuario);
+
+        emailService.sendEmailRandomPassword(usuario, primeiroAcessoSenha);
 
         return usuario.getId();
     }
@@ -68,6 +71,8 @@ public class UsuarioService implements UserDetailsService {
         usuario.setExpiracaoAuthToken(LocalDateTime.now().plusHours(1));
 
         usuarioRepository.save(usuario);
+
+        emailService.sendEmailChangePassword(usuario);
     }
 
 }
