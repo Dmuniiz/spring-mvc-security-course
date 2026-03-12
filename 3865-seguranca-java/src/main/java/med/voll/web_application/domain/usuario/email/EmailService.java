@@ -19,7 +19,7 @@ public class EmailService {
     private static final String EMAIL_ORIGEM = "vollmed@email.com";
     private static final String NAME_SENDER = "Clínica Voll.Med";
 
-    public static final String URL ="http://localhost:8080/login";
+    public static final String URL ="http://localhost:8080";
 
     public EmailService(JavaMailSender sender) {
         this.sender = sender;

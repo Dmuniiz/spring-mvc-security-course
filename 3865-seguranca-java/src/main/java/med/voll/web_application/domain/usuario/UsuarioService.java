@@ -3,7 +3,6 @@ package med.voll.web_application.domain.usuario;
 import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.perfil.Perfil;
 import med.voll.web_application.domain.usuario.email.EmailService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -68,11 +67,31 @@ public class UsuarioService implements UserDetailsService {
 
         String token = UUID.randomUUID().toString();
         usuario.setToken(token);
-        usuario.setExpiracaoAuthToken(LocalDateTime.now().plusHours(1));
+        usuario.setExpiracaoToken(LocalDateTime.now().plusHours(15));
 
         usuarioRepository.save(usuario);
 
         emailService.sendEmailChangePassword(usuario);
     }
 
+    public void recuperarConta(String codigo, DadosRecuperacaoConta dados) {
+
+        Usuario usuario = usuarioRepository.findByTokenIgnoreCase(codigo).orElseThrow(() -> new RegraDeNegocioException("Token inválido"));
+
+        if (usuario.getExpiracaoToken() == null || usuario.getExpiracaoToken().isBefore(LocalDateTime.now())) {
+            throw new RegraDeNegocioException("Link expirado");
+        }
+
+        if (!dados.novaSenha().equals(dados.novaSenhaConfirmacao())) {
+            throw new RegraDeNegocioException("Nova senha e confirmação de senha não coincidem");
+        }
+
+        String novaSenhaEncoded = encoder.encode(dados.novaSenha());
+        usuario.alterarSenha(novaSenhaEncoded);
+        usuario.setSenhaAlterada(true);
+        usuario.setToken(null);
+        usuario.setExpiracaoToken(null);
+
+        usuarioRepository.save(usuario);
+    }
 }

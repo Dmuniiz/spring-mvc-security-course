@@ -88,7 +88,11 @@ public class Usuario implements UserDetails {
         return token;
     }
 
-    public void setExpiracaoAuthToken(LocalDateTime localDateTime) {
+    public LocalDateTime getExpiracaoToken() {
+        return expiracaoToken;
+    }
+
+    public void setExpiracaoToken(LocalDateTime localDateTime) {
         this.expiracaoToken = localDateTime;
     }
 }

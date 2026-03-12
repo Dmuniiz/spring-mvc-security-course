@@ -10,7 +10,7 @@
 <body>
 <div layout:fragment="conteudo">
     <main class="container">
-        <div class="alert alert-success text-center text-uppercase" th:if="${param.verificado = true}">
+        <div class="alert alert-success text-center text-uppercase" th:if="${param.verificar != null}">
             <p>
                 <strong>Verifique seu email para redefinir sua senha!</strong>
             </p>
