@@ -2,9 +2,7 @@ package med.voll.web_application.domain.pacientes;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.voll.web_application.domain.medico.Especialidade;
 
 public record DadosCadastroPaciente(
         Long id,

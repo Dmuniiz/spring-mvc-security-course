@@ -45,7 +45,7 @@ public class LoginController {
     }
 
     @PostMapping("/alterar-senha")
-    public String cadastrar(@Valid @ModelAttribute("dados") DadosAlterarSenha dados,
+    public String cadastrarNovaSenha(@Valid @ModelAttribute("dados") DadosAlterarSenha dados,
                             BindingResult result,
                             Model model,
                             @AuthenticationPrincipal Usuario logado,

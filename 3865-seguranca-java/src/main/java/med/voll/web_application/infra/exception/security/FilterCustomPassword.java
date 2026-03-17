@@ -15,9 +15,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class FilterCustomPassword extends OncePerRequestFilter {
+public class FilterCustomPassword /*extends OncePerRequestFilter*/ {
 
-    @Override
+    /*@Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         if(request.getRequestURI().contains(".css") || request.getRequestURI().contains(".png")) {
@@ -36,5 +36,5 @@ public class FilterCustomPassword extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-    }
+    }*/
 }

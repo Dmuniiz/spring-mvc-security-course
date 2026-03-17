@@ -24,17 +24,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, OncePerRequestFilter filterCustomPassword) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http /*OncePerRequestFilter filterCustomPassword*/) throws Exception {
         return http
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/css/**", "/js/**", "/assets/**",
-                            "/", "/index", "/home", "/esqueci-minha-senha", "/recuperar-conta").permitAll();
+                            "/", "/index", "/home", "/esqueci-minha-senha", "/recuperar-conta", "criar-conta").permitAll();
                     req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
                     req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
                     req.anyRequest().authenticated();
                 })
-                .addFilterBefore(filterCustomPassword, UsernamePasswordAuthenticationFilter.class)
+                /*.addFilterBefore(filterCustomPassword, UsernamePasswordAuthenticationFilter.class)*/
                 .formLogin((form) ->
                         form
                                 .loginPage("/login")
