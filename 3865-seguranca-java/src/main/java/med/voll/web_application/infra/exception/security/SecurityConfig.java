@@ -32,6 +32,8 @@ public class SecurityConfig {
                     req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
                     req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
+                    req.requestMatchers("/consultas").hasAnyRole("ATENDENTE", "PACIENTE", "MEDICO");
+                    req.requestMatchers(HttpMethod.POST,"/consultas/formulario").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.anyRequest().authenticated();
                 })
                 /*.addFilterBefore(filterCustomPassword, UsernamePasswordAuthenticationFilter.class)*/

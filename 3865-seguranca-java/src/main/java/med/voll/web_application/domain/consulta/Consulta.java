@@ -28,10 +28,10 @@ public class Consulta {
     public Consulta(){}
 
     public Consulta(Medico medico, Paciente paciente, DadosAgendamentoConsulta dados) {
-        modificarDados(medico, paciente, dados);
+        cadastrarConsulta(medico, paciente, dados);
     }
 
-    public void modificarDados(Medico medico, Paciente paciente, DadosAgendamentoConsulta dados) {
+    public void cadastrarConsulta(Medico medico, Paciente paciente, DadosAgendamentoConsulta dados) {
         this.medico = medico;
         this.paciente = paciente;
         this.data = dados.data();

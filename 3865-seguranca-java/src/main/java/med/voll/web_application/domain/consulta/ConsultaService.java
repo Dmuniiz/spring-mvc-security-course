@@ -34,11 +34,12 @@ public class ConsultaService {
     public void cadastrar(DadosAgendamentoConsulta dados) {
         var medicoConsulta = medicoRepository.findById(dados.idMedico()).orElseThrow();
         var pacienteConsulta = pacienteRepository.findByCpf(dados.paciente()).orElseThrow();
+
         if (dados.id() == null) {
             repository.save(new Consulta(medicoConsulta, pacienteConsulta, dados));
         } else {
             var consulta = repository.findById(dados.id()).orElseThrow();
-            consulta.modificarDados(medicoConsulta, pacienteConsulta, dados);
+            consulta.cadastrarConsulta(medicoConsulta, pacienteConsulta, dados);
         }
     }
 

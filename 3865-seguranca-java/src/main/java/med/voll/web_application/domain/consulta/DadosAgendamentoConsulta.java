@@ -11,7 +11,7 @@ public record DadosAgendamentoConsulta(
         Long id,
         Long idMedico,
 
-        @NotNull
+        @NotNull(message = "cpf was not accepted")
         String paciente,
 
         @NotNull

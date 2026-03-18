@@ -75,7 +75,7 @@ public class EmailService {
         return template.replace("[[name]]", nome)
                 .replace("[[email]]", email)
                 .replace("[[senha]]", randomPassword)
-                .replace("[[URL]]", URL);
+                .replace("[[URL]]", URL );
     }
 
     public void sendEmailActiveAccount(Usuario usuario) {

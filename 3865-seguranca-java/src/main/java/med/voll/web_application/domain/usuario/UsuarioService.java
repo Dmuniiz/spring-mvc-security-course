@@ -36,7 +36,7 @@ public class UsuarioService implements UserDetailsService {
     public Long saveUser(String nome, String email, Perfil perfil) {
         String primeiroAcessoSenha = UUID.randomUUID().toString().substring(0, 8);
         String passwordEncoded = encoder.encode(primeiroAcessoSenha);
-        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded, perfil));
+        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, true, passwordEncoded, perfil));
 
         usuarioRepository.save(usuario);
 

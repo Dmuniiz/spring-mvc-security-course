@@ -41,6 +41,15 @@ public class Usuario implements UserDetails {
         this.ativo = false;
     }
 
+    public Usuario(String nome, String email, boolean ativo, String senha, Perfil perfil) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+        this.senhaAlterada = false;
+        this.ativo = true;
+    }
+
     public Usuario() {
     }
 
@@ -65,8 +74,9 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         if (this.perfil == perfil.PACIENTE) {
             return this.ativo;
+        }else{
+            return true;
         }
-        return this.ativo = true;
     }
 
     @Override

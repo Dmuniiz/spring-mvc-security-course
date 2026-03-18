@@ -53,7 +53,6 @@ public class PacienteService {
 
     @Transactional
     public void criarConta(DadosCriarContaPaciente dados) {
-        System.out.println("fdsafasd");
         if (repository.isJaCadastrado(dados.email(), dados.cpf(), null)) {
             throw new RegraDeNegocioException("E-mail ou CPF já cadastrado para outro Paciente!");
         }

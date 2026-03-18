@@ -35,6 +35,7 @@ public class MedicoService {
         if (dados.id() == null) {
             Long userId = usuarioService.saveUser(dados.nome(), dados.email(), Perfil.MEDICO);
             repository.save(new Medico(userId, dados));
+
         } else {
             var medico = repository.findById(dados.id()).orElseThrow();
             medico.atualizarDados(dados);
@@ -55,5 +56,7 @@ public class MedicoService {
     public List<DadosListagemMedico> listarPorEspecialidade(Especialidade especialidade) {
         return repository.findByEspecialidade(especialidade).stream().map(DadosListagemMedico::new).toList();
     }
+
+
 
 }
