@@ -1,1 +1,0 @@
-o Spring Security armazena as informações desse usuário (como seu nome de usuário, senha e autoridadesroles) no SecurityContext. 
