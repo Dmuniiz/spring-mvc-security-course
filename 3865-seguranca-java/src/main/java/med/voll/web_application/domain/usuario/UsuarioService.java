@@ -51,11 +51,11 @@ public class UsuarioService implements UserDetailsService {
 
     public void alterarSenha(DadosAlterarSenha dados, Usuario logado) {
         if (!encoder.matches(dados.senhaAtual(), logado.getPassword())) {
-            throw new RuntimeException("Senha atual incorreta");
+            throw new RegraDeNegocioException("Senha atual incorreta");
         }
 
         if (!dados.novaSenha().equals(dados.novaSenhaConfirmacao())) {
-            throw new RuntimeException("Nova senha e confirmação de senha não coincidem");
+            throw new RegraDeNegocioException("Nova senha e confirmação de senha não coincidem");
         }
 
         String novaSenhaEncoded = encoder.encode(dados.novaSenha());
