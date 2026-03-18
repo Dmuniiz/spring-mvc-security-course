@@ -3,6 +3,7 @@ package med.voll.web_application.domain.pacientes;
 import jakarta.persistence.*;
 import med.voll.web_application.domain.medico.DadosCadastroMedico;
 import med.voll.web_application.domain.perfil.Perfil;
+import med.voll.web_application.domain.usuario.DadosCriarContaPaciente;
 
 @Entity
 @Table(name = "pacientes")
@@ -23,6 +24,18 @@ public class Paciente {
     public Paciente(Long userID, DadosCadastroPaciente dados) {
         this.id = userID;
         atualizarDados(this.id, dados);
+    }
+
+    public Paciente(Long userID, DadosCriarContaPaciente dados) {
+        this.id = userID;
+        criarConta(this.id, dados);
+    }
+
+    public void criarConta(Long id, DadosCriarContaPaciente dados) {
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.cpf = dados.cpf();
+        this.telefone = dados.telefone();
     }
 
     public void atualizarDados(Long id, DadosCadastroPaciente dados) {

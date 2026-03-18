@@ -1,8 +1,10 @@
 package med.voll.web_application.domain.pacientes;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.perfil.Perfil;
+import med.voll.web_application.domain.usuario.DadosCriarContaPaciente;
 import med.voll.web_application.domain.usuario.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,5 +49,16 @@ public class PacienteService {
     public void excluir(Long userId) {
         repository.deleteById(userId);
         usuarioService.deleteUser(userId);
+    }
+
+    @Transactional
+    public void criarConta(DadosCriarContaPaciente dados) {
+        System.out.println("fdsafasd");
+        if (repository.isJaCadastrado(dados.email(), dados.cpf(), null)) {
+            throw new RegraDeNegocioException("E-mail ou CPF já cadastrado para outro Paciente!");
+        }
+
+        Long userId = usuarioService.criarContaPaciente(dados.nome(), dados.email(), dados.password(), Perfil.PACIENTE);
+        repository.save(new Paciente(userId, dados));
     }
 }

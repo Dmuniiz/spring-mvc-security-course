@@ -78,4 +78,15 @@ public class EmailService {
                 .replace("[[URL]]", URL);
     }
 
+    public void sendEmailActiveAccount(Usuario usuario) {
+        String subject = "Bem-vindo à Clínica Voll Med | Ativação de Conta";
+            String template = templateContentEmail("Olá [[name]],<br>"
+                    + "Por favor clique no link abaixo para Ativar Sua Conta<br>"
+                    + "<h3><a href=\"[[URL]]\" target=\"_self\">ATIVAR CONTA</a></h3>"
+                    + "Conte com nossa equipe para o que precisar!<br>"
+                    + "Obrigado,<br>"
+                    + "Clínica Voll Med.", usuario.getNome(), URL + "/ativar-conta?token=" + usuario.getToken());
+
+            sendEmail(usuario.getUsername(), subject, template);
+    }
 }

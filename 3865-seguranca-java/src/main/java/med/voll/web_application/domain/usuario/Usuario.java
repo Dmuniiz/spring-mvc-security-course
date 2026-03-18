@@ -30,12 +30,15 @@ public class Usuario implements UserDetails {
     private String token;
     private LocalDateTime expiracaoToken;
 
+    private boolean ativo;
+
     public Usuario(String nome, String email, String senha, Perfil perfil) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.perfil = perfil;
         this.senhaAlterada = false;
+        this.ativo = false;
     }
 
     public Usuario() {
@@ -56,6 +59,14 @@ public class Usuario implements UserDetails {
 
     public String getNome(){
         return nome;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        if (this.perfil == perfil.PACIENTE) {
+            return this.ativo;
+        }
+        return this.ativo = true;
     }
 
     @Override
@@ -94,5 +105,9 @@ public class Usuario implements UserDetails {
 
     public void setExpiracaoToken(LocalDateTime localDateTime) {
         this.expiracaoToken = localDateTime;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.ativo = enabled;
     }
 }

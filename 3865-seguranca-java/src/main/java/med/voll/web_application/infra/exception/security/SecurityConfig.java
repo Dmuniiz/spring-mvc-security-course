@@ -28,7 +28,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/css/**", "/js/**", "/assets/**",
-                            "/", "/index", "/home", "/esqueci-minha-senha", "/recuperar-conta", "criar-conta").permitAll();
+                            "/", "/index", "/home", "/esqueci-minha-senha", "/recuperar-conta", "criar-conta", "ativar-conta").permitAll();
                     req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
                     req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.requestMatchers("/medicos/**").hasRole("ATENDENTE");

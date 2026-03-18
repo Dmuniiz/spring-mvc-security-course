@@ -1,5 +1,7 @@
 package med.voll.web_application.domain.usuario;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.perfil.Perfil;
 import med.voll.web_application.domain.usuario.email.EmailService;
@@ -89,6 +91,34 @@ public class UsuarioService implements UserDetailsService {
         String novaSenhaEncoded = encoder.encode(dados.novaSenha());
         usuario.alterarSenha(novaSenhaEncoded);
         usuario.setSenhaAlterada(true);
+        usuario.setToken(null);
+        usuario.setExpiracaoToken(null);
+
+        usuarioRepository.save(usuario);
+    }
+
+    public Long criarContaPaciente(String nome,String email, String password, Perfil perfil) {
+        String passwordEncoded = encoder.encode(password);
+        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, passwordEncoded, perfil));
+
+        String token = UUID.randomUUID().toString();
+        usuario.setToken(token);
+        usuario.setExpiracaoToken(LocalDateTime.now().plusHours(15));
+
+        usuarioRepository.save(usuario);
+        emailService.sendEmailActiveAccount(usuario);
+
+        return usuario.getId();
+    }
+
+    public void ativarConta(String token) {
+        var usuario = usuarioRepository.findByTokenIgnoreCase(token).orElseThrow(() -> new RegraDeNegocioException("Token inválido"));
+
+        if (usuario.getExpiracaoToken() == null || usuario.getExpiracaoToken().isBefore(LocalDateTime.now())) {
+            throw new RegraDeNegocioException("Link expirado");
+        }
+
+        usuario.setEnabled(true);
         usuario.setToken(null);
         usuario.setExpiracaoToken(null);
 

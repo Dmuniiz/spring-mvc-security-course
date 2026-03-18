@@ -11,10 +11,12 @@ public record DadosCriarContaPaciente(Long id,
                                       @NotBlank
                                       @Email
                                       String email,
-
                                       @NotBlank
                                       String telefone,
 
                                       @NotBlank
                                       @Pattern(regexp = "^\\d{11}$", message = "CPF must contain 11 digits")
-                                      String cpf) { }
+                                      String cpf,
+
+                                      @NotBlank
+                                      String password) { }
