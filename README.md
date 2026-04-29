@@ -2,7 +2,7 @@
 
 This repository contains a Spring Boot MVC application used to study authentication, authorization, and account lifecycle flows with Spring Security.
 
-The runnable application lives in [`3865-seguranca-java/`](./3865-seguranca-java).
+The runnable application lives in [`project/`](./project).
 
 ## Project overview
 
